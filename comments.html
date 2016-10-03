@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>Esempio di Commenti</title>
+<script>
+
+var baseContent = [
+	["Giulio Cesare","<u>Buongiorno!</u>",0],
+];
+
+function define(box)
+{
+	var content = baseContent;
+	var finalContent = "";
+	finalContent += "<table border=2>";
+	var colors = [];
+	
+	for(i=0;i<content.length;i++){
+		finalContent += "<tr id='row"+i+"'>";
+		
+		for(j=0;j<content[i].length;j++){
+		
+			if(j==content[i].length-1)
+			{
+				var lvl = parseInt(content[i][j]);
+				switch(lvl){
+					case 1:
+						colors[i] = "#0000FF";
+						break;
+					case 2:
+						colors[i] = "#FF0000";
+						break;
+					default:
+						colors[i] = "";
+						break;
+				}
+				continue;
+			}
+			finalContent += "<td>";
+			finalContent += content[i][j];
+			finalContent += "</td>";
+		}
+		
+		finalContent += "</tr>";
+	}
+	
+	finalContent += "</table>";
+	
+	var contenutore = document.getElementById(box);
+	contenutore.innerHTML = finalContent;
+	
+	//...
+	// cicliamo tutti gli elementi in colors
+	// avendo come indice il riferimento all elemento
+	// riga (tr) su dovremo applicare un cambio di ['background-color']
+	//document.getElementById("row"+i);
+for  (i=0 ; i<colors.length; i++){
+document.getElementById("row"+i).style['background-color'] = colors[i];
+}
+
+}
+
+
+function populate(box){
+	var nome = document.getElementById('name').value;
+	var comment = document.getElementById('comment').value;
+	var level = document.getElementById('ciccio').value;
+	baseContent.push([nome,comment,level]);
+	define(box);
+}
+
+</script>
+
+</head>
+
+<body onLoad="define('box')">
+<label>Nome:</label>
+<br/>
+<input id="name"></input>
+<br/>
+<label>Commento:</label>
+<br/>
+<textarea id="comment"></textarea>
+<br/>
+<label>Urgenza:</label>
+<br/>
+<span>il nostro select</span>
+
+<select id="ciccio">
+  <option value="0">bassa</option>
+  <option value="1">media</option>
+  <option value="2">alta</option>
+</select>
+  
+<br/>
+<button onClick="populate('box')">Ricarica!</button>
+<br/><br/>
+<div id="box"></div>
+
+
+
+</body>
+
+</html>
